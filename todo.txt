@@ -1,0 +1,10 @@
+- connect RGB and test
+- finish motor.py
+- Connect motors and test
+- finish storage.py
+- implement storage box and test
+- build auto.py
+- build camera.py
+- build webserver.py
+- build gsm.py
+- build media.py
