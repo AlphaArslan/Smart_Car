@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 ########################### pin config GPIO.BOARD
 GPIO_MODE           =       GPIO.BOARD
 # RGB led
-STATUS_LED_PIN      =       (3, 5, 7)           # R , G , B pins
+STATUS_LED_PIN      =       [3, 5, 7]           # R , G , B pins
 
 
 
