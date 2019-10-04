@@ -12,9 +12,15 @@ STATUS_LED_PIN      =       (3, 5, 7)           # R , G , B pins
 # ports
 TASK_PORT           =       "tcp://localhost:5555"
 
+
 # motors
-MTR_FRWRD_SPD       =       200                 # motor forward speed [PWM]
-MTR_BKWRD_SPD       =       200                 # motor backward speed [PWM]
+MTR_PWM_FREQ        =       10000              # user manual says 20KHz is max
+MTR_FRWRD_SPD       =       80                 # motor forward speed [PWM duty cycle 0~100]
+MTR_BKWRD_SPD       =       80                 # motor backward speed [PWM duty cycle 0~100]
+MTR_DIR_FORWARD     =       1
+MTR_DIR_BACKWARD    =       0
+MTR_R_PIN           =       (11, 12)           # (direction, PWM)
+MTR_L_PIN           =       (13, 15)
 
 # RGB led colors
 FREE_STATUS_COLOR   =       (0, 1, 0)           # green color to indicate car is free and waiting for tasks
