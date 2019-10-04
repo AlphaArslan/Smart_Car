@@ -26,7 +26,7 @@ if __name__ == '__main__':
     socket.bind(config.TASK_PORT)
 
     # motors
-    car = motor.CarFourMotors()
+    car = motor.Car(config.MTR_R_PIN, config.MTR_L_PIN)
 
     # status led
     status_led = indicate.StatusLed(config.STATUS_LED_PIN)
