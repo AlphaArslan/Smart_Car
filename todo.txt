@@ -1,4 +1,3 @@
-- connect RGB and test
 - finish motor.py
 - Connect motors and test
 - finish storage.py
