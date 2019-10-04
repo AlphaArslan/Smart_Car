@@ -3,7 +3,7 @@ import zmq
 from time import sleep
 import RPi.GPIO as GPIO
 
-from config import *
+import config
 import motor
 import indicate
 
@@ -23,19 +23,16 @@ if __name__ == '__main__':
     # to get tasks from other modules
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    socket.bind(TASK_PORT)
+    socket.bind(config.TASK_PORT)
 
     # motors
     car = motor.CarFourMotors()
 
     # status led
-    status_led = indicate.StatusLed(STATUS_LED_PIN)
-
-    # GPIO
-    GPIO.setmode(GPIO_MODE)
+    status_led = indicate.StatusLed(config.STATUS_LED_PIN)
 
     while True:
-        status_led.indicate(FREE_STATUS_COLOR)
+        status_led.indicate(config.FREE_STATUS_COLOR)
         task = wait_for_tasks()
-        status_led.indicate(BUSY_STATUS_COLOR)
-        # execute task 
+        status_led.indicate(config.BUSY_STATUS_COLOR)
+        # execute task
