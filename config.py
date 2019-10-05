@@ -10,8 +10,8 @@ STATUS_LED_PIN      =       (3, 5, 7)           # R , G , B pins
 
 ########################### const
 # ports
-TASK_PORT           =       "tcp://localhost:5555"
-
+TASK_PORT           =       "5555"
+MEDIA_PORT          =       "4456"
 
 # motors
 MTR_PWM_FREQ        =       10000              # user manual says 20KHz is max
@@ -27,3 +27,8 @@ FREE_STATUS_COLOR   =       (0, 1, 0)           # green color to indicate car is
 BUSY_STATUS_COLOR   =       (1, 1, 0)           # Yellow color to indicate car is busy
 DONE_STATUS_COLOR   =       (0, 0, 1)           # Blue color to indicate success
 ERR_STATUS_COLOR    =       (1, 0, 0)           # Red color to indicate error
+
+# media commands
+MEDIA_CMD_PLAY      =       b'play'
+MEDIA_CMD_STOP      =       b'stop'
+MEDIA_CMD_TERMINATE =       b'terminate'
