@@ -1,6 +1,6 @@
 ########################### IMPORT
 import zmq
-from config import *
+import config
 
 ########################### FUNC
 def wait_for_task():
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # socket to send tasks
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect(TASK_PORT)
+    socket.connect("tcp://localhost:"+config.TASK_PORT)
 
     while True:
         wait_for_task()
