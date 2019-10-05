@@ -1,9 +1,7 @@
-- finish motor.py
+- build gsm.py
 - Connect motors and test
 - finish storage.py
 - implement storage box and test
 - build auto.py
 - build camera.py
 - build webserver.py
-- build gsm.py
-- build media.py
