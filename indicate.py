@@ -12,6 +12,9 @@ class StatusLed():
         GPIO.setup(B_pin, GPIO.OUT)
 
     def indicate(self, color_tuple):
+        """
+        light RGB color
+        """
         r, g, b = color_tuple
         GPIO.output(self.rpin, r)
         GPIO.output(self.gpin, g)
