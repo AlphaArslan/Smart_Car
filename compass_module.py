@@ -3,9 +3,8 @@ this module communicates with the compass (magnetometer) module HMC5883L
 - It uses I2C protocol
 - https://github.com/ControlEverythingCommunity/HMC5883/blob/master/Python/HMC5883.py
 """
-
-import smbus		#import SMBus module of I2C
-from time import sleep  #import sleep
+import time
+from smbus2 import SMBus
 import math
 
 # Registers and their Address
@@ -72,6 +71,6 @@ class Compass():
         #convert into angle
         heading_angle = int(heading * 180/pi)
 
-        print ("Heading Angle = %d°" %heading_angle)
+        # print ("Heading Angle = %d°" %heading_angle)
 
         return heading_angle
