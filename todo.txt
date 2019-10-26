@@ -1,3 +1,7 @@
+- test movement
+- fix compass
+- re-implement compass in auto.py
+- test GPS
 - build webserver.py and test video stream
 - Connect motors and test
 - test and enhance navigation algorithm

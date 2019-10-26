@@ -1,3 +1,5 @@
+# tested and working 
+
 import RPi.GPIO as GPIO
 import time
 import config
