@@ -1,6 +1,8 @@
 # compass component is actually a QMC5883L (address 0x0d)
 # it not a HMC5883L as the seller claims
+# tested and working
 
+# do calibration first from lib/py-qcm.../calibration
 
 import sys
 sys.path.append('..')
@@ -9,9 +11,8 @@ import time
 
 compass_obj = compass_module.Compass(0x1e)
 
-while True:
-    print(compass_obj.get_heading_angle())
-    time.sleep(1)
 
-# address 0x0d
-# zero raw data
+while True:
+    num = compass_obj.get_heading_angle()
+    print(num)
+    time.sleep(1)
