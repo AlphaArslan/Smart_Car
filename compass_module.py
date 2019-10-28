@@ -7,6 +7,7 @@ follow X-axis
 
 import py_qmc5883l
 import math
+import config
 
 class Compass():
     def __init__(self):
@@ -16,8 +17,8 @@ class Compass():
                                     [ 0.00000000e+00,  0.00000000e+00,  1.00000000e+00]]
         self.compass.declination = 22.5
 
-    def get_heading_angle(self):
-        return self.compass.get_bearing()
-
-    def getc(self):
-        return self.compass.get_calibration()
+    def get_heading_angle(self, dbg = config.DEBUG_MODE):
+        angle = self.compass.get_bearing()
+        if dbg:
+            print("[COMPASS] compass angle: {0:.2f}".format(angle))
+        return angle

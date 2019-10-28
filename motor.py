@@ -30,31 +30,45 @@ class Car():
         self.right_motor = motor.Motor(right)
         self.left_motor = motor.Motor(left)
 
-    def move_forward(self):
+    def move_forward(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] moving forward")
         self.right_motor.forward()
         self.left_motor.forward()
 
-    def move_backward(self):
+    def move_backward(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] moving backward")
         self.right_motor.backward()
         self.left_motor.backward()
 
-    def turn_forward_right(self):
+    def turn_forward_right(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] turning forward right")
         self.right_motor.stop()
         self.left_motor.forward()
 
-    def turn_forward_left(self):
+    def turn_forward_left(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] turning forward left")
         self.right_motor.forward()
         self.left_motor.stop()
 
-    def turn_backward_right(self):
+    def turn_backward_right(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] turning backward right")
         self.right_motor.stop()
         self.left_motor.backward()
 
-    def turn_backward_left(self):
+    def turn_backward_left(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] turning backward left")
         self.right_motor.backward()
         self.left_motor.stop()
 
-    def stop(self):
+    def stop(self, dbg = config.DEBUG_MODE):
+        if dbg :
+            print("[CAR] stopping ")
         self.right_motor.stop()
         self.left_motor.stop()
 
