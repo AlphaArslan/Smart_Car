@@ -8,8 +8,8 @@ GPIO_MODE           =       GPIO.BOARD
 # RGB led
 STATUS_LED_PIN      =       (3, 5, 7)           # R , G , B pins
 
-MTR_R_PIN           =       (11, 12)            # (direction, PWM)
-MTR_L_PIN           =       (13, 15)
+MTR_R_PIN           =       (35, 37)            # (direction, PWM)
+MTR_L_PIN           =       (36, 38)
 
 US_TRIG_PIN         =       36                  # ultrasonic
 US_ECHO_PIN         =       38

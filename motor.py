@@ -27,8 +27,8 @@ class Motor():
 
 class Car():
     def __init__(self, right, left):
-        self.right_motor = motor.Motor(right)
-        self.left_motor = motor.Motor(left)
+        self.right_motor = Motor(right)
+        self.left_motor = Motor(left)
 
     def move_forward(self, dbg = config.DEBUG_MODE):
         if dbg :
