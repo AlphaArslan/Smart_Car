@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 ########################### pin config GPIO.BOARD
 GPIO_MODE           =       GPIO.BOARD
@@ -26,8 +26,8 @@ ANGLE_TOLERANCE     =       5                  # in degrees
 US_BLOCKED_THRESH   =       100                # in cm
 
 # delays
-TURN_DELAY          =       0.2                # in seconds
-STEP_DELAY          =       1                  # in seconds
+TURN_DELAY          =       1.7                # in seconds
+STEP_DELAY          =       1.5                # in seconds
 
 # motors
 MTR_PWM_FREQ        =       10000              # user manual says 20KHz is max
@@ -35,7 +35,7 @@ MTR_FRWRD_SPD       =       80                 # motor forward speed [PWM duty c
 MTR_BKWRD_SPD       =       80                 # motor backward speed [PWM duty cycle 0~100]
 MTR_DIR_FORWARD     =       1
 MTR_DIR_BACKWARD    =       0
-MTR_RL_DIFF         =       5                  # added to left side
+MTR_RL_DIFF         =       17                  # added to left side
 
 # RGB led colors
 FREE_STATUS_COLOR   =       (0, 1, 0)           # green color to indicate car is free and waiting for tasks
