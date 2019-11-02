@@ -1,5 +1,6 @@
 import config
 import RPi.GPIO as GPIO
+from time import sleep
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -12,13 +13,13 @@ class Motor():
         self.pwm = GPIO.PWM(self.pwm_pin, config.MTR_PWM_FREQ)
         self.pwm.start(0)
 
-    def forward(self, speed = config.MTR_FRWRD_SPD ):
+    def forward(self, diff = 0 ):
         GPIO.output(self.dir_pin, config.MTR_DIR_FORWARD)
-        self.pwm.ChangeDutyCycle(speed)
+        self.pwm.ChangeDutyCycle(config.MTR_FRWRD_SPD + diff)
 
-    def backward(self, speed = config.MTR_BKWRD_SPD ):
+    def backward(self, diff = 0 ):
         GPIO.output(self.dir_pin, config.MTR_DIR_BACKWARD)
-        self.pwm.ChangeDutyCycle(speed)
+        self.pwm.ChangeDutyCycle(config.MTR_BKWRD_SPD+ diff)
 
     def stop(self):
         self.pwm.ChangeDutyCycle(0)
@@ -34,37 +35,25 @@ class Car():
         if dbg :
             print("[CAR] moving forward")
         self.right_motor.forward()
-        self.left_motor.forward()
+        self.left_motor.forward(diff= config.MTR_RL_DIFF)
 
     def move_backward(self, dbg = config.DEBUG_MODE):
         if dbg :
             print("[CAR] moving backward")
         self.right_motor.backward()
-        self.left_motor.backward()
+        self.left_motor.backward(diff= config.MTR_RL_DIFF)
 
-    def turn_forward_right(self, dbg = config.DEBUG_MODE):
+    def turn_right(self, dbg = config.DEBUG_MODE):
         if dbg :
             print("[CAR] turning forward right")
-        self.right_motor.stop()
-        self.left_motor.forward()
+        self.right_motor.backward()
+        self.left_motor.forward(diff= config.MTR_RL_DIFF)
 
-    def turn_forward_left(self, dbg = config.DEBUG_MODE):
+    def turn_left(self, dbg = config.DEBUG_MODE):
         if dbg :
             print("[CAR] turning forward left")
         self.right_motor.forward()
-        self.left_motor.stop()
-
-    def turn_backward_right(self, dbg = config.DEBUG_MODE):
-        if dbg :
-            print("[CAR] turning backward right")
-        self.right_motor.stop()
-        self.left_motor.backward()
-
-    def turn_backward_left(self, dbg = config.DEBUG_MODE):
-        if dbg :
-            print("[CAR] turning backward left")
-        self.right_motor.backward()
-        self.left_motor.stop()
+        self.left_motor.backward(diff= config.MTR_RL_DIFF)
 
     def stop(self, dbg = config.DEBUG_MODE):
         if dbg :
@@ -84,32 +73,21 @@ class Car():
         sleep(5)
 
         if prnt:
-            print("Forward Right")
-        self.turn_forward_right()
+            print("Right")
+        self.turn_right()
         sleep(5)
 
         if prnt:
-            print("Forward Left")
-        self.turn_forward_left()
+            print("Left")
+        self.turn_left()
         sleep(5)
 
-        if prnt:
-            print("Backward Right")
-        self.turn_backward_right()
-        sleep(5)
-
-        if prnt:
-            print("Backward Left")
-        self.turn_backward_left()
-        sleep(5)
 
         self.stop()
 
 ################################################
 if __name__ == '__main__':
+
     car_obj = Car(config.MTR_R_PIN, config.MTR_L_PIN)
 
     car_obj.move_forward()
-    time.sleep(5)
-    car_obj.move_backward()
-    time.sleep(5)

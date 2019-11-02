@@ -35,6 +35,7 @@ MTR_FRWRD_SPD       =       80                 # motor forward speed [PWM duty c
 MTR_BKWRD_SPD       =       80                 # motor backward speed [PWM duty cycle 0~100]
 MTR_DIR_FORWARD     =       1
 MTR_DIR_BACKWARD    =       0
+MTR_RL_DIFF         =       5                  # added to left side
 
 # RGB led colors
 FREE_STATUS_COLOR   =       (0, 1, 0)           # green color to indicate car is free and waiting for tasks
