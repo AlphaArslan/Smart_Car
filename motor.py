@@ -104,3 +104,12 @@ class Car():
         sleep(5)
 
         self.stop()
+
+################################################
+if __name__ == '__main__':
+    car_obj = Car(config.MTR_R_PIN, config.MTR_L_PIN)
+
+    car_obj.move_forward()
+    time.sleep(5)
+    car_obj.move_backward()
+    time.sleep(5)
