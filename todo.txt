@@ -1,3 +1,4 @@
+- build webpage 
 - gps python script
 - eyes
 - re-implement compass in auto.py

@@ -79,7 +79,7 @@ class Pilot():
 
     def go_to_locaion(self, final_location, dbg = config.DEBUG_MODE):
         """
-        pass location you want
+        pass location you want (lat, long)
         wait until I reach it
         """
         if dbg:
@@ -108,3 +108,8 @@ class Pilot():
             # update current_loc and distance
             self.current_loc = gps_obj.get_location()
             self.distance = geopy.distance.geodesic(self.current_loc, self.target_loc).m
+
+##############################################
+if __name__ == '__main__':
+    p = Pilot()
+    p.go_to_locaion((0,0))

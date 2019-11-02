@@ -1,0 +1,87 @@
+<head>
+
+</head>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+
+    <title>Smart Door camera</title>
+  </head>
+
+  <body>
+    <script src="static/js/jquery-3.4.1.js"> </script>
+    <script src="static/js/popper.min.js"> </script>
+    <script src="static/js/bootstrap.min.js"> </script>
+
+    <!--start body here-->
+
+    <!-- navigation bar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-3 ">
+      <a class="navbar-brand" href="#">Smart Door Camera</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ">
+          <a class="nav-item nav-link" href="/">Home</a>
+          <a class="nav-item nav-link active" href="/stream">Stream <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/log">Log</a>
+          <a class="nav-item nav-link" href="/users">Users</a>
+
+        </div>
+      </div>
+    </nav>
+    <!-- navigation bar -->
+
+
+    <!-- stream box -->
+    <img src="{{ url_for('video_feed') }}" class="rounded mx-auto d-block w-75" alt="Responsive image">
+    <!-- stream box -->
+
+    <!-- buttons -->
+    <!-- <div class="text-center mt-3">
+      <a class="btn btn-success btn-lg btn-lg mr-3" href="#" role="button">Open</a>
+      <a class="btn btn-danger btn-lg btn-lg ml-3" href="#" role="button">Lock</a>
+    </div> -->
+    <div id="joystick" class="mx-auto w-75" style="width:20%">
+      <svg width="70%" height="70%" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:rgb(16,16,16);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgb(240,240,240);stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:rgb(240,240,240);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgb(16,16,16);stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:rgb(168,168,168);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgb(239,239,239);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="50" fill="url(#grad1)" />
+        <circle cx="50" cy="50" r="47" fill="url(#grad2)" stroke="black" stroke-width="1.5px" />
+        <circle cx="50" cy="50" r="44" fill="url(#grad3)" />
+        <circle cx="50" cy="50" r="20" fill="#cccccc" stroke="black" stroke-width="1px" onclick="alert('CENTER');" />
+        <path d="M50,14 54,22 46,22Z" fill="rgba(0,0,0,0.8)" onclick="alert('UP');" />
+        <path d="M50,86 54,78 46,78Z" fill="rgba(0,0,0,0.8)" onclick="alert('DOWN');" />
+        <path d="M14,50 22,54 22,46Z" fill="rgba(0,0,0,0.8)" onclick="alert('LEFT');" />
+        <path d="M86,50 78,54 78,46Z" fill="rgba(0,0,0,0.8)" onclick="alert('RIGHT');" />
+      </svg>
+    </div>
+
+    <!-- buttons -->
+
+
+
+  </body>
+</html>
