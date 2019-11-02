@@ -7,6 +7,9 @@ https://www.instructables.com/id/Raspberry-Pi-the-Neo-6M-GPS/
 # serial interface is /dev/serial0
 # it takes some seconds before getting results
 # tested and working
+# stty -F /dev/serial0 9600
+# sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
+# cgps -s
 
 import serial
 import pynmea2
@@ -25,7 +28,7 @@ class GPS():
             print("waitng for GPS data")
             time.sleep(0.5)
             str = self.serial_port.readline()
-            
+
         msg = pynmea2.parse(str)
         return msg
         # latitude = 0

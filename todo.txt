@@ -1,5 +1,5 @@
-- test movement
 - gps python script
+- eyes
 - re-implement compass in auto.py
 - test and enhance navigation algorithm
 - finish storage.py
