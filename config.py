@@ -17,7 +17,7 @@ US_ECHO_PIN         =       32
 
 ########################### const
 # ports
-TASK_PORT           =       "5555"
+CTRL_PORT           =       "5555"
 MEDIA_PORT          =       "4456"
 
 # tolerances
@@ -47,3 +47,11 @@ ERR_STATUS_COLOR    =       (1, 0, 0)           # Red color to indicate error
 MEDIA_CMD_PLAY      =       b'play'
 MEDIA_CMD_STOP      =       b'stop'
 MEDIA_CMD_TERMINATE =       b'terminate'
+
+# control commands
+TASK_CMD_FRWRD      =       b'f'
+TASK_CMD_BKWRD      =       b'b'
+TASK_CMD_TRN_R      =       b'r'
+TASK_CMD_TRN_L      =       b'l'
+TASK_CMD_STOP       =       b's'
+TASK_CMD_AUTO       =       b'a'

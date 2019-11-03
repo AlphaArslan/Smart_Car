@@ -52,7 +52,31 @@ def controls(control):
         print("sending command")
         control_socket.send(config.TASK_CMD_FRWRD)
         print(control_socket.recv())
-    return "ok"
+        return "ok"
+
+    if control == "backward":
+        print("sending command")
+        control_socket.send(config.TASK_CMD_BKWRD)
+        print(control_socket.recv())
+        return "ok"
+
+    if control == "right":
+        print("sending command")
+        control_socket.send(config.TASK_CMD_TRN_R)
+        print(control_socket.recv())
+        return "ok"
+
+    if control == "left":
+        print("sending command")
+        control_socket.send(config.TASK_CMD_TRN_L)
+        print(control_socket.recv())
+        return "ok"
+
+    if control == "stop":
+        print("sending command")
+        control_socket.send(config.TASK_CMD_STOP)
+        print(control_socket.recv())
+        return "ok"
 
 
 ########################## main
