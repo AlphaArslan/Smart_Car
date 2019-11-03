@@ -6,20 +6,21 @@ import cv2
 import config
 
 class Camera():
-    def __init__(self, id):
+    def __init__(self, id, dbg=config.DEBUG_MODE):
         """
         microsoft live hd-3000 camera
         """
         self.cam = cv2.VideoCapture(id)
+        self.dbg = dbg
 
     def get_image_rgb(self):
         ret, img = self.cam.read()
         if ret:
-            if config.DEBUG_MODE:
+            if self.dbg:
                 print("[CAM] returned an image")
             im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             return im_rgb
-        if config.DEBUG_MODE:
+        if self.dbg:
             print("[CAM] no image")
         return None
 
