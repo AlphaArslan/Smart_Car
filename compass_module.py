@@ -8,6 +8,7 @@ follow X-axis
 import py_qmc5883l
 import math
 import config
+import time
 
 class Compass():
     def __init__(self):
@@ -22,3 +23,11 @@ class Compass():
         if dbg:
             print("[COMPASS] compass angle: {0:.2f}".format(angle))
         return angle
+
+#################################
+if __name__ == '__main__':
+    compass_obj = Compass()
+    while True:
+        num = compass_obj.get_heading_angle()
+        print(num)
+        time.sleep(1)
