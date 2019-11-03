@@ -4,7 +4,7 @@ communicates with compass and gps modules
 """
 ################# import
 import compass_module
-import gps_module
+import GPS_module
 import config
 import geopy.distance
 import motor
@@ -13,8 +13,8 @@ import math
 import ultrasonic
 
 ################# objects
-compass_obj = compass_module.Compass(0x1e)
-gps_obj = gps_module.GPS()
+compass_obj = compass_module.Compass()
+gps_obj = GPS_module.GPS()
 car_obj = motor.Car(config.MTR_R_PIN, config.MTR_L_PIN)
 us_obj = ultrasonic.UltraSonic(config.US_TRIG_PIN, config.US_ECHO_PIN)
 
