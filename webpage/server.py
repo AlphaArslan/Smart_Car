@@ -12,11 +12,11 @@ import config
 
 ########################## setup
 app = Flask(__name__)
-cam = camera.Camera(0)
+cam = camera.Camera(0, dbg=False)
 
 # control socket
-context2 = zmq.Context()
-control_socket = context2.socket(zmq.REQ)
+context = zmq.Context()
+control_socket = context.socket(zmq.REQ)
 control_socket.connect("tcp://localhost:"+config.CTRL_PORT)
 
 ########################## routes
@@ -48,9 +48,10 @@ def order():
 @app.route("/controls/<string:control>")
 def controls(control):
     print(control)
-    # if control == "forward":
-    #     control_socket.send(config.TASK_CMD_FRWRD)
-    #     print(control_socket.recv())
+    if control == "forward":
+        print("sending command")
+        control_socket.send(config.TASK_CMD_FRWRD)
+        print(control_socket.recv())
     return "ok"
 
 
