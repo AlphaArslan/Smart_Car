@@ -7,9 +7,9 @@ GPIO.setwarnings(False)
 class StatusLed():
     def __init__(self, pins_tuble):
         self.rpin, self.gpin, self.bpin = pins_tuble
-        GPIO.setup(R_pin, GPIO.OUT)
-        GPIO.setup(G_pin, GPIO.OUT)
-        GPIO.setup(B_pin, GPIO.OUT)
+        GPIO.setup(self.rpin, GPIO.OUT)
+        GPIO.setup(self.gpin, GPIO.OUT)
+        GPIO.setup(self.bpin, GPIO.OUT)
 
     def indicate(self, color_tuple):
         """
