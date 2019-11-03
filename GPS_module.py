@@ -15,7 +15,6 @@ import serial
 import pynmea2
 import time
 import config
-
 class GPS():
     def __init__(self, dbg= config.DEBUG_MODE):
         self.dbg = dbg
@@ -28,11 +27,12 @@ class GPS():
         if self.dbg:
             print("[GPS] getting gps location")
 
-        str = self.serial_port.readline()
-        while (str.find('GGA') == 0):
-            print("waitng for GPS data")
-            time.sleep(0.5)
-            str = self.serial_port.readline()
+        str = self.serial_port.readline().decode("utf-8")
+        #print(str)
+
+        while not "$GPRMC" in str:
+            str = self.serial_port.readline().decode("utf-8")
+            #print(str)
 
         msg = pynmea2.parse(str)
 
@@ -43,6 +43,12 @@ class GPS():
         return msg
 
 ##########################################
+
+
 if __name__ == '__main__':
-    gps = GPS()
-    print(gps.get_location())
+    gps = GPS(dbg=False)
+    while True:
+        data = gps.get_location()
+        print(data)
+        print(data.lat, data.lat_dir, "  ", data.lon, data.lon_dir)
+        #print(data.lon, data.lon_dir)
