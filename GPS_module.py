@@ -11,6 +11,10 @@ https://www.instructables.com/id/Raspberry-Pi-the-Neo-6M-GPS/
 # sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
 # cgps -s
 
+# NMEA sentence format
+# 3,4   4916.45,N    Latitude 49 deg. 16.45 min North
+# 5,6   12311.12,W   Longitude 123 deg. 11.12 min West
+
 import serial
 import pynmea2
 import time
@@ -36,11 +40,21 @@ class GPS():
 
         msg = pynmea2.parse(str)
 
-        loc = (0, 0)
+        s = msg.lat
+        deg = int(s[0:s.find(".")-2])
+        min = float(s[s.find(".")-2:])
+        lat = deg + min/60
+
+        s = msg.lon
+        deg = int(s[0:s.find(".")-2])
+        min = float(s[s.find(".")-2:])
+        lon = deg + min/60
+
+        loc = (lat , long)
         if self.dbg:
             print("[GPS] gps location: {}".format(loc))
 
-        return msg
+        return loc
 
 ##########################################
 
@@ -50,5 +64,3 @@ if __name__ == '__main__':
     while True:
         data = gps.get_location()
         print(data)
-        print(data.lat, data.lat_dir, "  ", data.lon, data.lon_dir)
-        #print(data.lon, data.lon_dir)
