@@ -32,7 +32,7 @@ class Camera():
 if __name__ == '__main__':
     cam_obj = Camera(0)
     while True:
-        cv2.imshow('frame',cam_obj.get_image())
+        cv2.imshow('frame',cam_obj.get_image_rgb())
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cv2.destroyAllWindows()

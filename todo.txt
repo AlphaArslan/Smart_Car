@@ -1,7 +1,3 @@
-- build webpage 
-- gps python script
-- eyes
-- re-implement compass in auto.py
-- test and enhance navigation algorithm
-- finish storage.py
-- implement storage box and test
+- check module working with new structure
+- check manual control
+- check auto driver

@@ -6,7 +6,7 @@ DEBUG_MODE = True
 GPIO_MODE           =       GPIO.BOARD
 
 # RGB led
-STATUS_LED_PIN      =       (3, 5, 7)           # R , G , B pins
+STATUS_LED_PIN      =       (11, 13, 15)           # R , G , B pins
 
 MTR_R_PIN           =       (35, 37)            # (direction, PWM)
 MTR_L_PIN           =       (36, 38)
