@@ -2,13 +2,13 @@
 from flask import Flask, render_template, redirect, request, Response
 import glob
 import os
-import camera
 import cv2
 import zmq
 
 import sys
 sys.path.append('..')
 import config
+import camera
 
 ########################## setup
 app = Flask(__name__)
