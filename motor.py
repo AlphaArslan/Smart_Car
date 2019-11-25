@@ -13,13 +13,13 @@ class Motor():
         self.pwm = GPIO.PWM(self.pwm_pin, config.MTR_PWM_FREQ)
         self.pwm.start(0)
 
-    def forward(self, diff = 0 ):
+    def forward(self, speed= config.MTR_FRWRD_SPD ,diff = 0 ):
         GPIO.output(self.dir_pin, config.MTR_DIR_FORWARD)
-        self.pwm.ChangeDutyCycle(config.MTR_FRWRD_SPD + diff)
+        self.pwm.ChangeDutyCycle(speed + diff)
 
-    def backward(self, diff = 0 ):
+    def backward(self, speed= config.MTR_BKWRD_SPD ,diff = 0 ):
         GPIO.output(self.dir_pin, config.MTR_DIR_BACKWARD)
-        self.pwm.ChangeDutyCycle(config.MTR_BKWRD_SPD+ diff)
+        self.pwm.ChangeDutyCycle(speed+ diff)
 
     def stop(self):
         self.pwm.ChangeDutyCycle(0)
@@ -60,6 +60,12 @@ class Car():
             print("[CAR] stopping ")
         self.right_motor.stop()
         self.left_motor.stop()
+
+    def line_follow(self, dir):
+        if dbg :
+            print("[CAR] following line")
+        self.right_motor.forward(speed= config.MTR_FRWRD_SPD//2 - dir*5)
+        self.left_motor.forward(speed= config.MTR_FRWRD_SPD//2 + dir*5 ,diff= config.MTR_RL_DIFF)
 
     def test_move(self, prnt= False):
         if prnt:
