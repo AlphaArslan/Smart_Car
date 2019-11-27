@@ -19,6 +19,7 @@ US_ECHO_PIN         =       32
 # ports
 CTRL_PORT           =       "5555"
 MEDIA_PORT          =       "4456"
+AUTO_PORT           =       "5453"
 
 # tolerances
 DIST_TOLERANCE      =       1                  # in meters

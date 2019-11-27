@@ -9,6 +9,7 @@ import auto
 ########################### obj
 status_led_obj = indicate.StatusLed(config.STATUS_LED_PIN)
 pilot_obj = auto.Pilot()
+pilot_obj.line_follow()
 
 ############ setup
 # media socket
@@ -19,6 +20,10 @@ media_socket.connect("tcp://localhost:"+config.MEDIA_PORT)
 # control socket
 control_socket = context.socket(zmq.REP)
 control_socket.bind("tcp://*:"+config.CTRL_PORT)
+
+# auto socket
+auto_socket = context.socket(zmq.REQ)
+auto_socket.connect("tcp://localhost:"+ config.AUTO_PORT)
 
 ########################### functions
 def wait_for_tasks():
@@ -34,12 +39,20 @@ def wait_for_tasks():
 
 ########################### MAIN
 if __name__ == '__main__':
-    print("main")
+    # print("main")
     ############ loop
     while True:
+        # run line follower
+        auto_control.send(b'play')
+    	print(auto_control.recv())
         status_led_obj.indicate(config.FREE_STATUS_COLOR)
+        # wait for manual
         task, loc = wait_for_tasks()
-        pilot_obj.stop()
+
+        # stop line follower
+        auto_control.send(b'stop')
+    	print(auto_control.recv())
+
         status_led_obj.indicate(config.BUSY_STATUS_COLOR)
         if task == config.TASK_CMD_FRWRD:
             pilot_obj.forward()
