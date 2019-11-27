@@ -32,26 +32,33 @@ class Pilot():
                     car_obj.move_backward()
                     time.sleep(0.4)
                     car_obj.stop()
-                    time.sleep(1.5)
+                    time.sleep(2.5)
+                    for _ in range(10):
+                        dir = line_follower_cv.get_direction()
                     f =1
                 elif f == 1:
                     car_obj.turn_right()
-                    time.sleep(1)
+                    #time.sleep(1)
+                    time.sleep(0.6)
                     car_obj.stop()
-                    time.sleep(1.5)
+                    time.sleep(2.5)
+                    for _ in range(10):
+                        dir = line_follower_cv.get_direction()
                     f = 2
                 elif f == 2:
                     car_obj.turn_left()
+                    #time.sleep(2.2)
                     time.sleep(1.4)
                     car_obj.stop()
-                    time.sleep(1.5)
+                    time.sleep(2.5)
+                    for _ in range(10):
+                        dir = line_follower_cv.get_direction()
                     f = 3
                 elif f == 3 :
                     f = 0
                     ft = ft + 1
-                    dir = line_follower_cv.get_direction()
-                    dir = line_follower_cv.get_direction()
-                    dir = line_follower_cv.get_direction()
+                    for _ in range(10):
+                        dir = line_follower_cv.get_direction()
                     if ft == 3:
                         break
                     time.sleep(3)
@@ -65,9 +72,11 @@ class Pilot():
                 dir = -x
             print(dir)
             car_obj.line_follow(dir)
-            time.sleep(0.5 + 0.36*abs(dir))
+            #time.sleep(0.5 + 0.36*abs(dir))
+            time.sleep(0.15 + 0.1*abs(dir))
             car_obj.move_forward(sped= 18 + (x-abs(dir))*1.3)
-            time.sleep(0.18 + (x-abs(dir))*0.1)
+            #time.sleep(0.18 + (x-abs(dir))*0.1)
+            time.sleep(0.15 + (x-abs(dir))*0.08)
             
     def follow_line2(self):
         for _ in range(10):
@@ -115,13 +124,13 @@ if __name__ == '__main__':
     print("m")
     p = Pilot()
     #p.follow_line()
-    #car_obj.stop()
+    car_obj.stop()
     #exit()
     try:
         p.follow_line()
     except Exception as e:
         print(e)
-    car_obj.stop()
+        car_obj.stop()
     p.stop()
 
 

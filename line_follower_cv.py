@@ -22,7 +22,7 @@ def get_direction():
     #cv2.waitKey(0)
 
     # ROI
-    roi = img[300:350,0:800]
+    roi = img[400:450,0:800]
     #cv2.imshow("cropped", roi)
     #cv2.waitKey(0)
     

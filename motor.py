@@ -64,7 +64,8 @@ class Car():
     def line_follow(self, dir, dbg = config.DEBUG_MODE):
         if dbg :
             print("[CAR] following line")
-        x = 10       
+        #x = 10
+        x = 10
         if dir > 0:
             self.right_motor.backward(speed= x*dir)
             self.left_motor.forward(speed= x*dir )
@@ -106,8 +107,8 @@ if __name__ == '__main__':
 
     car_obj = Car(config.MTR_R_PIN, config.MTR_L_PIN)
 
-    car_obj.line_follow(-8)
+    car_obj.line_follow(-7)
     #car_obj.move_forward()
     #car_obj.turn_right()
-    sleep(3.2)
+    sleep(1.4)
     car_obj.stop()
