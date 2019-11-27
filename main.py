@@ -34,7 +34,7 @@ def wait_for_tasks():
 
 ########################### MAIN
 if __name__ == '__main__':
-
+    print("main")
     ############ loop
     while True:
         status_led_obj.indicate(config.FREE_STATUS_COLOR)

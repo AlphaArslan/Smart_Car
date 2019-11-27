@@ -26,7 +26,7 @@ ANGLE_TOLERANCE     =       5                  # in degrees
 US_BLOCKED_THRESH   =       100                # in cm
 
 # delays
-TURN_DELAY          =       1.7                # in seconds
+TURN_DELAY          =       3.75               # in seconds
 STEP_DELAY          =       1.5                # in seconds
 
 # motors
