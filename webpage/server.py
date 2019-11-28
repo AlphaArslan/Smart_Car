@@ -12,7 +12,7 @@ import camera
 
 ########################## setup
 app = Flask(__name__)
-cam = camera.Camera(0, dbg=False)
+cam = camera.Camera(2, dbg=False)
 
 # control socket
 context = zmq.Context()

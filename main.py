@@ -4,12 +4,11 @@ from time import sleep
 
 import config
 import indicate
-import auto
+import motor
 
 ########################### obj
 status_led_obj = indicate.StatusLed(config.STATUS_LED_PIN)
-pilot_obj = auto.Pilot()
-pilot_obj.line_follow()
+car_obj = motor.Car(config.MTR_R_PIN, config.MTR_L_PIN)
 
 ############ setup
 # media socket
@@ -39,28 +38,33 @@ def wait_for_tasks():
 
 ########################### MAIN
 if __name__ == '__main__':
+    manual_f = False
     # print("main")
     ############ loop
     while True:
         # run line follower
-        auto_control.send(b'play')
-    	print(auto_control.recv())
+        if not manual_f:
+            auto_socket.send(b'play')
+            print(auto_socket.recv())
         status_led_obj.indicate(config.FREE_STATUS_COLOR)
         # wait for manual
         task, loc = wait_for_tasks()
-
+        #sleep(5)
         # stop line follower
-        auto_control.send(b'stop')
-    	print(auto_control.recv())
+        auto_socket.send(b'stop')
+        print(auto_socket.recv())
+        #exit()
 
         status_led_obj.indicate(config.BUSY_STATUS_COLOR)
+        manual_f = True
         if task == config.TASK_CMD_FRWRD:
-            pilot_obj.forward()
+            car_obj.move_forward()
         elif task == config.TASK_CMD_BKWRD:
-            pilot_obj.backward()
+            car_obj.move_backward()
         elif task == config.TASK_CMD_TRN_R:
-            pilot_obj.right()
+            car_obj.turn_right()
         elif task == config.TASK_CMD_TRN_L:
-            pilot_obj.left()
+            car_obj.turn_left()
         elif task == config.TASK_CMD_STOP:
-            pilot_obj.stop()
+            car_obj.stop()
+            manual_f = False

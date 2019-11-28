@@ -16,6 +16,8 @@ def get_direction():
     """
     # get image
     img = line_cam.get_image_rgb()
+    while len(img) == 2:
+        img = line_cam.get_image_rgb()
     # img = cv2.imread("test"+slash+"camera.jpg")
     img = cv2.resize(img, (800, 600), interpolation = cv2.INTER_AREA)
     #cv2.imshow("resize", img)
@@ -30,7 +32,7 @@ def get_direction():
     gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (9,9), 0)
     #_, thresh = cv2.threshold(blur, 90,255, cv2.THRESH_BINARY_INV)
-    _, thresh = cv2.threshold(blur, 180,255, cv2.THRESH_BINARY)
+    _, thresh = cv2.threshold(blur, 210,255, cv2.THRESH_BINARY)
 
     #cv2.imshow("enhanced", thresh)
     #cv2.waitKey(0)
@@ -69,6 +71,5 @@ def get_direction():
 
 ########################## main
 if __name__ == '__main__':
-    
     print(get_direction())
     cv2.destroyAllWindows()

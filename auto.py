@@ -7,118 +7,17 @@ import config
 import motor
 import time
 import ultrasonic
-import line_follower_cv
-import multiprocessing
-import zmq
 
 ################# objects
 car_obj = motor.Car(config.MTR_R_PIN, config.MTR_L_PIN)
 us_obj = ultrasonic.UltraSonic(config.US_TRIG_PIN, config.US_ECHO_PIN)
 
-# shared var
-sh_f = multiprocessing.Value("i",0)
-
-# process
-def p():
-    # socket
-    context = zmq.Context()
-    socket = context.socket(zmq.REP)
-    socket.bind("tcp://*:"+ config.AUTO_PORT)
-    # listen on socket
-    while True:
-        r = socket.recv()
-        socket.send(b'OK')
-        if r == b'play':
-            sh_f.value = 1
-        elif r == b'stop':
-            sh_f.value = 0
-
-# control process
-prcs = multiprocessing.Process(target= p)
-prcs.start()
 
 ################# pilot class
 
 class Pilot():
     def __init__(self, dbg = config.DEBUG_MODE ):
         self.dbg = dbg
-
-    def follow_line(self):
-        f = 0
-        ft = 0
-        while True:
-            if if sh_f.value == 1:
-                print(">>{}".format(i))
-                dir = line_follower_cv.get_direction()
-                if dir == None:
-                    print("Can't find the line")
-                    if f == 0:
-                        car_obj.move_backward()
-                        time.sleep(0.4)
-                        car_obj.stop()
-                        time.sleep(2.5)
-                        for _ in range(10):
-                            dir = line_follower_cv.get_direction()
-                        f =1
-                    elif f == 1:
-                        car_obj.turn_right()
-                        #time.sleep(1)
-                        time.sleep(0.6)
-                        car_obj.stop()
-                        time.sleep(2.5)
-                        for _ in range(10):
-                            dir = line_follower_cv.get_direction()
-                        f = 2
-                    elif f == 2:
-                        car_obj.turn_left()
-                        #time.sleep(2.2)
-                        time.sleep(1.4)
-                        car_obj.stop()
-                        time.sleep(2.5)
-                        for _ in range(10):
-                            dir = line_follower_cv.get_direction()
-                        f = 3
-                    elif f == 3 :
-                        f = 0
-                        ft = ft + 1
-                        for _ in range(10):
-                            dir = line_follower_cv.get_direction()
-                        if ft == 3:
-                            break
-                        time.sleep(3)
-                    continue
-                f = 0
-                ft = 0
-                x = 8
-                if dir > x:
-                    dir = x
-                elif dir < -x:
-                    dir = -x
-                print(dir)
-                car_obj.line_follow(dir)
-                #time.sleep(0.5 + 0.36*abs(dir))
-                time.sleep(0.15 + 0.1*abs(dir))
-                car_obj.move_forward(sped= 18 + (x-abs(dir))*1.3)
-                #time.sleep(0.18 + (x-abs(dir))*0.1)
-                time.sleep(0.15 + (x-abs(dir))*0.08)
-            else:
-                time.sleep(2)
-
-    def follow_line2(self):
-        for _ in range(10):
-            car_obj.turn_left()
-            while line_follower_cv.get_direction() < -1:
-                print("left")
-                time.sleep(0.1)
-            car_obj.turn_right()
-            while line_follower_cv.get_direction() > 1:
-                print("right")
-                time.sleep(0.1)
-            car_obj.move_forward()
-            while abs(line_follower_cv.get_direction()) < 1.01:
-                print("forward")
-                time.sleep(0.1)
-
 
     def forward(self):
         if self.dbg:
@@ -149,13 +48,8 @@ class Pilot():
 if __name__ == '__main__':
     #print("m")
 
-    p = Pilot()
-    #p.follow_line()
-    #car_obj.stop()
+    #p = Pilot()
+    car_obj.turn_left()
+    time.sleep(2)
+    car_obj.stop()
     #exit()
-    try:
-        p.follow_line()
-    except Exception as e:
-        print(e)
-        car_obj.stop()
-    p.stop()

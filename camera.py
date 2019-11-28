@@ -12,6 +12,8 @@ class Camera():
         """
         self.cam = cv2.VideoCapture(id)
         self.cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        self.cam.set(3,400)
+        self.cam.set(4,400)
         self.dbg = dbg
 
     def get_image_rgb(self):
@@ -23,7 +25,7 @@ class Camera():
             return im_rgb
         if self.dbg:
             print("[CAM] no image")
-        return None
+        return (0,0)
 
     def __del__(self):
         self.cam.release()
@@ -31,7 +33,7 @@ class Camera():
 
 ###################### for testing
 if __name__ == '__main__':
-    cam_obj = Camera(0)
+    cam_obj = Camera(2)
     while True:
         img = cam_obj.get_image_rgb()
         cv2.imshow('frame',img)
