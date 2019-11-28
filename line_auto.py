@@ -18,7 +18,7 @@ sh_f = multiprocessing.Value("i",0)
 
 # process
 def p():
-    print("parallel")
+    print("[LNAT] parallel")
     # socket
     context = zmq.Context()
     socket = context.socket(zmq.REP)
@@ -37,12 +37,12 @@ prcs = multiprocessing.Process(target= p)
 prcs.start()
 
 def follow_line():
-    print("[AUTO] started line follower")
+    print("[LNAT] started line follower")
     f = 0
     ft = 0
     while True:
         if sh_f.value == 1:
-            print("[AUTO] line follower ON")
+            print("[LNAT] line follower ON")
             dir = line_follower_cv.get_direction()
             if dir == None:
                 print("Can't find the line")
@@ -94,7 +94,7 @@ def follow_line():
             #time.sleep(0.18 + (x-abs(dir))*0.1)
             time.sleep(0.15 + (x-abs(dir))*0.08)
         else:
-            print("[AUTO] line follower OFF")
+            print("[LNAT] line follower OFF")
             time.sleep(2)
 
 ###################################
@@ -103,4 +103,3 @@ if __name__ == '__main__':
     #exit()
     #sh_f.value = 1
     follow_line()
-

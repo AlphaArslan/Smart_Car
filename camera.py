@@ -4,40 +4,33 @@ sys.path.append('..')
 
 import cv2
 import config
+import zmq
 
-class Camera():
-    def __init__(self, id, dbg=config.DEBUG_MODE):
-        """
-        microsoft live hd-3000 camera
-        """
-        self.cam = cv2.VideoCapture(id)
-        self.cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-        self.cam.set(3,400)
-        self.cam.set(4,400)
-        self.dbg = dbg
+jpeg_quality = 70
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
 
-    def get_image_rgb(self):
-        ret, img = self.cam.read()
-        if ret:
-            if self.dbg:
-                print("[CAM] returned an image")
-            im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            return im_rgb
-        if self.dbg:
-            print("[CAM] no image")
-        return (0,0)
+# socket
+context = zmq.Context()
+soc_cam0 = context.socket(zmq.REP)
+soc_cam0.bind("tcp://*:"+ config.CAM_PORT)
 
-    def __del__(self):
-        self.cam.release()
-
-
-###################### for testing
-if __name__ == '__main__':
-    cam_obj = Camera(2)
+def cam_gen0():
+    cam0 = cv2.VideoCapture(0)
     while True:
-        img = cam_obj.get_image_rgb()
-        cv2.imshow('frame',img)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    cv2.imwrite("test/camera.jpg", img)
-    cv2.destroyAllWindows()
+        print("[CAM] waiting")
+        # wait for request
+        print(soc_cam0.recv())
+        # send image
+        ret, img = cam0.read()
+        if ret:
+            print("[CAM] returned an image")
+            im_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            _ , im_enc = cv2.imencode('.jpg', img, encode_param)
+            soc_cam0.send(im_enc.tobytes())
+        else:
+            print("[CAM] no image")
+            soc_cam0.send(b'None')
+
+############################################
+if __name__ == '__main__':
+    cam_gen0()

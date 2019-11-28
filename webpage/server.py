@@ -8,22 +8,28 @@ import zmq
 import sys
 sys.path.append('..')
 import config
-import camera
 
 ########################## setup
 app = Flask(__name__)
-cam = camera.Camera(2, dbg=False)
 
 # control socket
 context = zmq.Context()
 control_socket = context.socket(zmq.REQ)
 control_socket.connect("tcp://localhost:"+config.CTRL_PORT)
 
+# cam socket
+soc_cam0 = context.socket(zmq.REQ)
+soc_cam0.connect("tcp://localhost:"+ config.CAM_PORT)
+
 ########################## routes
 def img_gen():
     while True:
-        img = cam.get_image_rgb()
-        frame_bytes = cv2.imencode('.jpg',img)[1].tobytes()
+        soc_cam0.send(b'get')
+        answer = soc_cam0.recv()
+        if answer == b'None':
+            print("no image")
+            continue
+        frame_bytes = answer
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
 

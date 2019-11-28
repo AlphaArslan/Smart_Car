@@ -1,12 +1,17 @@
 ########################## import
 import numpy as np
 import cv2
-import camera
+import config
+import zmq
 
 ########################## controls
 slash = "/"
 IMAGE_SIZE = (800, 600)
-line_cam = camera.Camera(0, dbg=False)
+
+# socket
+context = zmq.Context()
+soc_cam0 = context.socket(zmq.REQ)
+soc_cam0.connect("tcp://localhost:"+ config.CAM_PORT)
 
 ########################## func
 def get_direction():
@@ -15,9 +20,18 @@ def get_direction():
     returns: [-10:10] for [left : right]
     """
     # get image
-    img = line_cam.get_image_rgb()
-    while len(img) == 2:
-        img = line_cam.get_image_rgb()
+    print("[LFCV] getting image...")
+    soc_cam0.send(b'get')
+    answer = soc_cam0.recv()
+    if answer == b'None':
+        print("[LFCV] no image")
+        return None
+
+    print("[LFCV] got image")
+    array = np.frombuffer(answer, dtype=np.dtype('uint8'))
+    frame = cv2.imdecode(array, 1)
+    img = frame
+
     # img = cv2.imread("test"+slash+"camera.jpg")
     img = cv2.resize(img, (800, 600), interpolation = cv2.INTER_AREA)
     #cv2.imshow("resize", img)
@@ -27,7 +41,7 @@ def get_direction():
     roi = img[400:450,0:800]
     #cv2.imshow("cropped", roi)
     #cv2.waitKey(0)
-    
+
     # image inhancement
     gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (9,9), 0)
@@ -40,7 +54,7 @@ def get_direction():
     contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     #print(len(contours))
     if len(contours) == 0:
-        print("[LINE] couldn't find the line")
+        print("[LFCV] couldn't find the line")
         return None
     elif contours == 1:
         line_cntr = contours[0]
@@ -53,8 +67,8 @@ def get_direction():
             if ca > cntr_area:
                 cntr_area = ca
                 line_cntr = cntr
-                
-    # print(cntr_area)               
+
+    # print(cntr_area)
     M = cv2.moments(line_cntr)
     cX = int(M["m10"] / M["m00"])
     cY = int(M["m01"] / M["m00"])
