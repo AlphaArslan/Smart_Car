@@ -4,14 +4,43 @@ print("0")
 import zmq
 import multiprocessing
 import line_follower_cv
-import motor
 import config
 import time
 
 print("1")
 
+class CarMapper():
+    def __init__(self):
+        pass
+    def move_forward(self):
+        moto_socket.send(b"f")
+        print(moto_socket.recv())
+    def move_backward(self):
+        moto_socket.send(b"b")
+        print(moto_socket.recv())
+    def turn_right(self):
+        moto_socket.send(b"r")
+        print(moto_socket.recv())
+    def turn_left(self):
+        moto_socket.send(b"l")
+        print(moto_socket.recv())
+    def stop(self):
+        moto_socket.send(b"s")
+        print(moto_socket.recv())
+    def line_follow(self, dir):
+        moto_socket.send(b"l")
+        print(moto_socket.recv())
+        dir = str(dir) #convert from float to string
+        dir = dir.encode() #convert from string to bytes
+        moto_socket.send(dir)
+        print(moto_socket.recv())
+
+car_obj = CarMapper()
+
 ################# objects
-car_obj = motor.Car(config.MTR_R_PIN, config.MTR_L_PIN)
+context = zmq.Context()
+moto_socket = context.socket(zmq.REQ)
+moto_socket.connect("tcp://localhost:"+ config.MOTO_PORT)
 
 # shared var
 sh_f = multiprocessing.Value("i",0)
@@ -20,7 +49,6 @@ sh_f = multiprocessing.Value("i",0)
 def p():
     print("[LNAT] parallel")
     # socket
-    context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:"+ config.AUTO_PORT)
     # listen on socket

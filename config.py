@@ -21,6 +21,7 @@ CTRL_PORT           =       "5555"
 MEDIA_PORT          =       "4456"
 AUTO_PORT           =       "5453"
 CAM_PORT            =       "1218"
+MOTO_PORT           =       "2227"
 
 # tolerances
 DIST_TOLERANCE      =       1                  # in meters

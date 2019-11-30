@@ -5,6 +5,11 @@ from time import sleep
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
+# socket
+context = zmq.Context()
+socket = context.socket(zmq.REP)
+socket.bind("tcp://*:"+ config.MOTO_PORT)
+
 class Motor():
     def __init__(self, pins_tuble):
         self.dir_pin, self.pwm_pin = pins_tuble
@@ -72,7 +77,7 @@ class Car():
         else:
             self.right_motor.forward(speed= -x*dir)
             self.left_motor.backward(speed= -x*dir )
-            
+
     def test_move(self, prnt= False):
         if prnt:
             print("Forward")
@@ -99,7 +104,7 @@ class Car():
             print("Left")
         self.turn_left()
         sleep(3)
-        
+
         self.stop()
 
 ################################################
@@ -107,8 +112,29 @@ if __name__ == '__main__':
 
     car_obj = Car(config.MTR_R_PIN, config.MTR_L_PIN)
 
-    car_obj.line_follow(-7)
-    #car_obj.move_forward()
-    #car_obj.turn_right()
-    sleep(1.4)
-    car_obj.stop()
+    # car_obj.line_follow(-7)
+    # #car_obj.move_forward()
+    # #car_obj.turn_right()
+    # sleep(1.4)
+    # car_obj.stop()
+
+    while True:
+        print("[CAR] waiting for orders")
+        r = socket.recv()
+        socket.send(b'OK')
+        if r == b"f":
+            car_obj.move_forward()
+        elif r == b"b":
+            car_obj.move_backward()
+        elif r == b"r":
+            car_obj.turn_right()
+        elif r == b"l":
+            car_obj.turn_left()
+        elif r == b"s":
+            car_obj.stop()
+        elif r == b"line":
+            dir = socket.recv()
+            socket.send(b'OK')
+            dir = dir.decode() # converting from bytes to string
+            dir = float(dir) # converting from string to float
+            car_obj.line_follow(dir)

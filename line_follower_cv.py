@@ -81,7 +81,7 @@ def get_direction():
     #cv2.waitKey(0)
 
     # take decision
-    return ((cX - 400)/40)
+    return round( ((cX - 400)/40) ,2)
 
 ########################## main
 if __name__ == '__main__':

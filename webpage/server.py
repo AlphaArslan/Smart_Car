@@ -14,12 +14,47 @@ app = Flask(__name__)
 
 # control socket
 context = zmq.Context()
-control_socket = context.socket(zmq.REQ)
-control_socket.connect("tcp://localhost:"+config.CTRL_PORT)
+auto_socket = context.socket(zmq.REQ)
+auto_socket.connect("tcp://localhost:"+ config.AUTO_PORT)
 
 # cam socket
 soc_cam0 = context.socket(zmq.REQ)
 soc_cam0.connect("tcp://localhost:"+ config.CAM_PORT)
+
+moto_socket = context.socket(zmq.REQ)
+moto_socket.connect("tcp://localhost:"+ config.MOTO_PORT)
+
+
+class CarMapper():
+    def __init__(self):
+        pass
+    def move_forward(self):
+        moto_socket.send(b"f")
+        print(moto_socket.recv())
+    def move_backward(self):
+        moto_socket.send(b"b")
+        print(moto_socket.recv())
+    def turn_right(self):
+        moto_socket.send(b"r")
+        print(moto_socket.recv())
+    def turn_left(self):
+        moto_socket.send(b"l")
+        print(moto_socket.recv())
+    def stop(self):
+        moto_socket.send(b"s")
+        print(moto_socket.recv())
+    def line_follow(self, dir):
+        moto_socket.send(b"l")
+        print(moto_socket.recv())
+        dir = str(dir) #convert from float to string
+        dir = dir.encode() #convert from string to bytes
+        moto_socket.send(dir)
+        print(moto_socket.recv())
+
+car_obj = CarMapper()
+
+
+
 
 ########################## routes
 def img_gen():
@@ -54,34 +89,28 @@ def order():
 @app.route("/controls/<string:control>")
 def controls(control):
     print(control)
+    auto_socket.send(b'stop')
+    print(auto_socket.recv())
     if control == "forward":
-        print("sending command")
-        control_socket.send(config.TASK_CMD_FRWRD)
-        print(control_socket.recv())
+        car_obj.move_forward()
         return "ok"
 
     if control == "backward":
-        print("sending command")
-        control_socket.send(config.TASK_CMD_BKWRD)
-        print(control_socket.recv())
+        car_obj.move_backward()
         return "ok"
 
     if control == "right":
-        print("sending command")
-        control_socket.send(config.TASK_CMD_TRN_R)
-        print(control_socket.recv())
+        car_obj.turn_right()
         return "ok"
 
     if control == "left":
-        print("sending command")
-        control_socket.send(config.TASK_CMD_TRN_L)
-        print(control_socket.recv())
+        car_obj.turn_left()
         return "ok"
 
     if control == "stop":
-        print("sending command")
-        control_socket.send(config.TASK_CMD_STOP)
-        print(control_socket.recv())
+        car_obj.stop()
+        auto_socket.send(b'play')
+        print(auto_socket.recv())
         return "ok"
 
 
