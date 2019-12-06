@@ -78,33 +78,29 @@ def follow_line():
                     car_obj.move_backward()
                     time.sleep(0.4)
                     car_obj.stop()
-                    time.sleep(2.5)
-                    for _ in range(10):
-                        dir = line_follower_cv.get_direction()
+                    time.sleep(0.5)
+
                     f =1
                 elif f == 1:
                     car_obj.turn_right()
                     #time.sleep(1)
                     time.sleep(0.6)
                     car_obj.stop()
-                    time.sleep(2.5)
-                    for _ in range(10):
-                        dir = line_follower_cv.get_direction()
+                    time.sleep(0.5)
+
                     f = 2
                 elif f == 2:
                     car_obj.turn_left()
                     #time.sleep(2.2)
                     time.sleep(1.4)
                     car_obj.stop()
-                    time.sleep(2.5)
-                    for _ in range(10):
-                        dir = line_follower_cv.get_direction()
+                    time.sleep(0.5)
+
                     f = 3
                 elif f == 3 :
                     f = 0
                     ft = ft + 1
-                    for _ in range(10):
-                        dir = line_follower_cv.get_direction()
+
                     time.sleep(3)
                 continue
             f = 0
